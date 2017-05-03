@@ -45,4 +45,9 @@
     <string name="order_nothing">您还没有选择宝贝哦</string>
     <string name="confirm_order">确认订单</string>
     <string name="skip">跳过</string>
+    <string name="newGoods">新品</string>
+    <string name="boutique">精选</string>
+    <string name="category">分类</string>
+    <string name="cart">购物车</string>
+    <string name="personal">个人中心</string>
 </resources>

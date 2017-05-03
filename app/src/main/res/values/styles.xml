@@ -135,4 +135,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="main_menu">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:onClick">onChangedCheck</item>
+    </style>
 </resources>

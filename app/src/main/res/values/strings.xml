@@ -45,4 +45,9 @@
     <string name="order_nothing">order is noting</string>
     <string name="confirm_order">confirm order</string>
     <string name="skip">skip</string>
+    <string name="newGoods">NewGoods</string>
+    <string name="boutique">Boutique</string>
+    <string name="category">category</string>
+    <string name="cart">cart</string>
+    <string name="personal">personal</string>
 </resources>

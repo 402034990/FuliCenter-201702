@@ -3,12 +3,12 @@ package cn.ucai.fulicenter.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 
 /**
@@ -16,26 +16,23 @@ import cn.ucai.fulicenter.R;
  */
 
 public class SplashActivity extends AppCompatActivity {
-    TextView tvSkip;
     MyCountDownTimer mTimer;
+    @BindView(R.id.skip)
+    TextView tvSkip;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        tvSkip = (TextView) findViewById(R.id.skip);
+        ButterKnife.bind(this);
         mTimer = new MyCountDownTimer(8000, 1000);
         mTimer.start();
-        onListener();
     }
 
-    private void onListener() {
-        tvSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTimer.cancel();
-                mTimer.onFinish();
-            }
-        });
+    @OnClick(R.id.skip)
+    void skip() {
+        mTimer.cancel();
+        mTimer.onFinish();
     }
 
 
@@ -53,12 +50,12 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            tvSkip.setText(getString(R.string.skip)+" "+millisUntilFinished/1000 + "s");
+            tvSkip.setText(getString(R.string.skip) + " " + millisUntilFinished / 1000 + "s");
         }
 
         @Override
         public void onFinish() {
-            startActivity(new Intent(SplashActivity.this,MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             SplashActivity.this.finish();
         }
     }
