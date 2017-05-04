@@ -1,4 +1,4 @@
-package cn.ucai.fulicenter.utils;
+package cn.ucai.fulicenter.model.utils;
 
 import android.util.Log;
 
