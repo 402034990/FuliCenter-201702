@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.model.bean.NewGoodsBean;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
+import cn.ucai.fulicenter.view.activity.GoodsDetailActivity;
 
 /**
  * Created by Administrator on 2017/5/4 0004.
@@ -78,10 +80,17 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return;
         }
         NewGoodsViewHolder goods = (NewGoodsViewHolder) holder;
-        NewGoodsBean goodsbean = list.get(position);
+        final NewGoodsBean goodsbean = list.get(position);
         goods.mtv_newgoods_name.setText(goodsbean.getGoodsName());
         goods.mtv_newgoods_price.setText(goodsbean.getCurrencyPrice());
-        ImageLoader.downloadImg(context, goods.mivnewgoods, goodsbean.getGoodsThumb(), isDragging);
+        ImageLoader.downloadImg(context, goods.mivnewgoods, goodsbean.getGoodsThumb());
+        goods.mivnewgoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, GoodsDetailActivity.class)
+                .putExtra("GoodsId",goodsbean.getGoodsId()));
+            }
+        });
     }
 
 

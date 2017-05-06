@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/miv_boutique"
+        android:padding="6dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_toRightOf="@+id/miv_boutique"
+        android:weightSum="3"
+        android:orientation="vertical"
+        android:padding="6dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/boutique_title"
+            android:textColor="#f00"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/boutique_name"
+            android:textColor="#000"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/boutique_descrip"
+            android:layout_weight="1"
+            android:textColor="#777"/>
+    </LinearLayout>
+</RelativeLayout>

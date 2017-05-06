@@ -1,20 +1,22 @@
-package cn.ucai.fulicenter.view.fragment;
-
+package cn.ucai.fulicenter.view.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.model.bean.BoutiqueBean;
 import cn.ucai.fulicenter.model.bean.NewGoodsBean;
 import cn.ucai.fulicenter.model.net.IModelGoods;
 import cn.ucai.fulicenter.model.net.ModelGoods;
@@ -22,32 +24,52 @@ import cn.ucai.fulicenter.model.net.OnCompleteListener;
 import cn.ucai.fulicenter.model.utils.ResultUtils;
 import cn.ucai.fulicenter.view.adapter.NewGoodsAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class NewGoodsFragment extends Fragment {
-    SwipeRefreshLayout mLayout;
+public class BoutiqueChildActivity extends AppCompatActivity {
+
+    @BindView(R.id.boutique_child_back)
+    ImageView boutiqueChildBack;
+    @BindView(R.id.boutiquechild_name)
+    TextView boutiquechildName;
+    @BindView(R.id.texthint)
+    TextView texthint;
+    @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
-    TextView mTv_Hint;
+    @BindView(R.id.swip)
+    SwipeRefreshLayout swip;
+
+    IModelGoods mGoods;
+    BoutiqueBean bqChildbean;
+    Unbinder bind;
+
     NewGoodsAdapter mAdapter;
     GridLayoutManager manager;
-    static int PageId = 1;
+
+    int PageId=1;
+
     ArrayList<NewGoodsBean> mArrayList;
-
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_new_goods, container, false);
-        initView(layout);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_boutique_child);
+        bind = ButterKnife.bind(this);
+        initView();
         downloadNewGoods(I.PAGE_ID_DEFAULT,I.ACTION_DOWNLOAD);
         setListener();
-        return layout;
+    }
+
+    private void initView() {
+        bqChildbean = (BoutiqueBean) getIntent().getSerializableExtra("boutiqueChildId");
+        mGoods = new ModelGoods();
+        boutiquechildName.setText(bqChildbean.getTitle().trim());
+        mArrayList = new ArrayList<>();
+        manager = new GridLayoutManager(this, I.COLUM_NUM);
+        mRecyclerView.setLayoutManager(manager);
+        mAdapter = new NewGoodsAdapter(this, mArrayList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setListener() {
-        mLayout.setColorSchemeColors(
+        swip.setColorSchemeColors(
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
@@ -55,6 +77,16 @@ public class NewGoodsFragment extends Fragment {
         );
         setPullDown(I.ACTION_PULL_DOWN);
         setPullUp(I.ACTION_PULL_UP);
+        setBackListener();
+    }
+
+    private void setBackListener() {
+        boutiqueChildBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setPullUp(final int action) {
@@ -82,12 +114,12 @@ public class NewGoodsFragment extends Fragment {
     }
 
     private void setPullDown(final int action) {
-        mLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swip.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 PageId = 1;
-                mTv_Hint.setVisibility(View.VISIBLE);
-                mLayout.setRefreshing(true);
+                texthint.setVisibility(View.VISIBLE);
+                swip.setRefreshing(true);
                 downloadNewGoods(PageId,action);
             }
         });
@@ -95,7 +127,7 @@ public class NewGoodsFragment extends Fragment {
 
     private void downloadNewGoods(int pageId,final int action) {
         IModelGoods goods = new ModelGoods();
-        goods.loadNewGoodsMode(getContext(), 0, pageId, I.PAGE_SIZE_DEFAULT, new OnCompleteListener<NewGoodsBean[]>() {
+        goods.loadNewGoodsMode(this, bqChildbean.getId(), pageId, I.PAGE_SIZE_DEFAULT, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mAdapter.setMore(result!=null&&result.length>0);
@@ -111,8 +143,8 @@ public class NewGoodsFragment extends Fragment {
                         mAdapter.initNewGoodsData(mArrayList);
                         break;
                     case I.ACTION_PULL_DOWN:
-                        mTv_Hint.setVisibility(View.GONE);
-                        mLayout.setRefreshing(false);
+                        texthint.setVisibility(View.GONE);
+                        swip.setRefreshing(false);
                         mAdapter.initNewGoodsData(mArrayList);
                         break;
                     case I.ACTION_PULL_UP:
@@ -128,15 +160,12 @@ public class NewGoodsFragment extends Fragment {
         });
     }
 
-    private void initView(View layout) {
-        mLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swip);
-        mRecyclerView = (RecyclerView) layout.findViewById(R.id.recyclerview);
-        mTv_Hint = (TextView) layout.findViewById(R.id.texthint);
-        mArrayList = new ArrayList<>();
-        manager = new GridLayoutManager(getContext(), I.COLUM_NUM);
-        mRecyclerView.setLayoutManager(manager);
-        mAdapter = new NewGoodsAdapter(getContext(), mArrayList);
-        mRecyclerView.setAdapter(mAdapter);
-    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bind != null) {
+            bind.unbind();
+        }
+    }
 }

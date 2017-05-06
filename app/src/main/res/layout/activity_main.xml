@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/radio">
 
         <RadioButton
             android:id="@+id/newgoods"
@@ -48,4 +49,10 @@
             android:text="@string/personal"
             android:checked="false"/>
     </RadioGroup>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radio"
+        android:id="@+id/framlayout"/>
 </RelativeLayout>
