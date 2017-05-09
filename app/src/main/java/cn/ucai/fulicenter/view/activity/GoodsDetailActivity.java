@@ -22,8 +22,6 @@ import cn.ucai.fulicenter.model.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.model.net.IModelGoods;
 import cn.ucai.fulicenter.model.net.ModelGoods;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
-import cn.ucai.fulicenter.model.utils.OkHttpUtils;
-import cn.ucai.fulicenter.model.utils.ResultUtils;
 import cn.ucai.fulicenter.view.FlowIndicator;
 import cn.ucai.fulicenter.view.SlideAutoLoopView;
 
@@ -56,7 +54,6 @@ public class GoodsDetailActivity extends AppCompatActivity {
 
     IModelGoods mGoods;
 
-    int mCurrentColo = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,13 +100,12 @@ public class GoodsDetailActivity extends AppCompatActivity {
     }
 
     private void initImage() {
-        for (int i=0;i<mGoodsDetailsBean.getProperties().length;i++) {
-            updateColor(i);
-        }
+        updateColor(0);
     }
 
     private void updateColor(int i) {
         AlbumsBean[] album = mGoodsDetailsBean.getProperties()[i].getAlbums();
+        Log.i("main", "i:" + i);
         String[] albumsImgUrl = new String[album.length];
         for (int j = 0; j < albumsImgUrl.length; j++) {
             albumsImgUrl[j] = album[j].getImgUrl();
@@ -117,6 +113,13 @@ public class GoodsDetailActivity extends AppCompatActivity {
         mSlideAutoLoopView.startPlayLoop(mFlowIndicator, albumsImgUrl, albumsImgUrl.length);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mSlideAutoLoopView != null) {
+            mSlideAutoLoopView.stopPlayLoop();
+        }
+    }
 
     @Override
     protected void onDestroy() {

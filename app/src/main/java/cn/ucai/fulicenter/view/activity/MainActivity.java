@@ -9,11 +9,13 @@ import android.view.View;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.view.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.view.fragment.CategoryFragment;
 import cn.ucai.fulicenter.view.fragment.NewGoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
     NewGoodsFragment mGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
+    CategoryFragment mCategoryFragment;
     Fragment[] fragments;
     //当前fragment的下标
     int currentIndex=0;
@@ -40,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private void initFragment() {
         mGoodsFragment = new NewGoodsFragment();
         mBoutiqueFragment = new BoutiqueFragment();
+        mCategoryFragment = new CategoryFragment();
         fragments = new Fragment[5];
         fragments[0] = mGoodsFragment;
         fragments[1] = mBoutiqueFragment;
+        fragments[2] = mCategoryFragment;
     }
 
     public void onChangedCheck(View view) {
@@ -52,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.boutique:
                 Index = 1;
+                break;
+            case R.id.category:
+                Index = 2;
                 break;
         }
         showFragmentIndex();

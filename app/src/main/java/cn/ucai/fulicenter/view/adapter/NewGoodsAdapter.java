@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
@@ -107,6 +109,36 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return I.TYPE_ITEM;
     }
 
+    public void sort(final int sortBy) {
+        Collections.sort(list, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean o1, NewGoodsBean o2) {
+                int result=0;
+                switch (sortBy) {
+                    case I.SORT_BY_PRICE_ASC:
+                        result = getPrice(o1.getCurrencyPrice())-getPrice(o2.getCurrencyPrice());
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result = getPrice(o2.getCurrencyPrice())-getPrice(o1.getCurrencyPrice());
+                        break;
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result = (int) (o1.getAddTime() - o2.getAddTime());
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result = (int) (o2.getAddTime() - o1.getAddTime());
+                        break;
+                }
+                return result;
+            }
+        });
+        notifyDataSetChanged();
+    }
+
+    private int getPrice(String currentPrice) {
+        String price = currentPrice.substring(currentPrice.indexOf("￥") + 1);
+        return Integer.parseInt(price);
+    }
+
     public void initNewGoodsData(ArrayList arrayList) {
         list.clear();
         list.addAll(arrayList);
@@ -126,6 +158,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mtv_footer = (TextView) itemView.findViewById(R.id.tv_footer);
         }
     }
+
 
     class NewGoodsViewHolder extends RecyclerView.ViewHolder {
         ImageView mivnewgoods;

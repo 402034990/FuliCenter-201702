@@ -1,7 +1,6 @@
 package cn.ucai.fulicenter.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -20,10 +19,7 @@ import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
-import cn.ucai.fulicenter.model.utils.Utils;
 
 /**
  * 图片轮播
@@ -36,7 +32,7 @@ public class SlideAutoLoopView extends ViewPager {
     /**定义FlowIndicator:图片指示器view*/
     FlowIndicator mFlowIndicator;
     /** 轮播图片的适配器*/
-    SlideAutoLooopAdapter mAdapter;
+    SlideAutoLoopAdapter mAdapter;
     /** 图片数量*/
     int mCount;
     /** 图片轮播间隔时间*/
@@ -46,7 +42,6 @@ public class SlideAutoLoopView extends ViewPager {
     Timer mTimer;
     Handler mHandler;
     boolean mAutoSwitch=false;
-    
     public SlideAutoLoopView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext=context;
@@ -111,6 +106,7 @@ public class SlideAutoLoopView extends ViewPager {
                     }else{//设置为下一个item
                         //取出当前item的下标
                         int currentItem = SlideAutoLoopView.this.getCurrentItem();
+                        Log.i("main", "currentItem:" + currentItem);
                         currentItem++;//递增
                         //设置当前item为下一个
                         SlideAutoLoopView.this.setCurrentItem(currentItem);
@@ -122,16 +118,16 @@ public class SlideAutoLoopView extends ViewPager {
 
     /**
      * 轮播图片的适配器
-     * @author yao
+     * @author
      *
      */
-    class SlideAutoLooopAdapter extends PagerAdapter {
+    class SlideAutoLoopAdapter extends PagerAdapter {
         Context context;
         String[] albumImgUrl;
         int count;
 
-        public SlideAutoLooopAdapter(Context context, String[] albumImgUrl,
-                                     int count) {
+        public SlideAutoLoopAdapter(Context context, String[] albumImgUrl,
+                                    int count) {
             super();
             this.context = context;
             this.albumImgUrl = albumImgUrl;
@@ -179,7 +175,7 @@ public class SlideAutoLoopView extends ViewPager {
             mFlowIndicator.setmCount(count);
             mFlowIndicator.setmFocus(0);
             this.mAlbumImgUrl=albumImgUrl;
-            mAdapter=new SlideAutoLooopAdapter(mContext, mAlbumImgUrl, count);
+            mAdapter=new SlideAutoLoopAdapter(mContext, mAlbumImgUrl, count);
             this.setAdapter(mAdapter);
             
             try {
@@ -203,14 +199,17 @@ public class SlideAutoLoopView extends ViewPager {
         if(mTimer==null){
             mTimer=new Timer();
         }
-        mTimer.schedule(new TimerTask() {
+        /*mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(ACTION_PLAY);
             }
-        }, 1,mDuration);
+        }, 1000,mDuration);
+        */
+        MyTimer timer = new MyTimer();
+        mTimer.scheduleAtFixedRate(timer, 500,mDuration);
     }
-    
+
     /**
      * 停止图片轮播
      */
@@ -243,4 +242,13 @@ public class SlideAutoLoopView extends ViewPager {
             super.startScroll(startX, startY, dx, dy, this.duration);
         }
     }
+
+    class MyTimer extends TimerTask {
+
+        @Override
+        public void run() {
+            mHandler.sendEmptyMessage(ACTION_PLAY);
+        }
+    }
+
 }

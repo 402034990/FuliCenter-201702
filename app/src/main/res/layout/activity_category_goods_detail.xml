@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/good_detail_currency_price"
+        android:id="@+id/relative">
+
+        <ImageView
+            android:id="@+id/mIv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:onClick="onClick"/>
+
+        <cn.ucai.fulicenter.view.CatChildFilterButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_centerInParent="true"
+            android:textColor="#FFFF"
+            android:id="@+id/catchildFilterButton"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/good_detail_title_bg"
+        android:id="@+id/layout_linearlayout"
+        android:orientation="horizontal"
+        android:layout_below="@+id/relative">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="价格"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_order_down"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/arrow_down"
+            android:onClick="onClick"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上架时间"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/arrow_up"
+            android:onClick="onClick"
+            android:src="@drawable/arrow_order_up"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_linearlayout"
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/category_detail_recyclerview"/>
+    </LinearLayout>
+</RelativeLayout>
