@@ -50,4 +50,7 @@
     <string name="category">分类</string>
     <string name="cart">购物车</string>
     <string name="personal">个人中心</string>
+    <string name="delete_collect_success">删除收藏成功</string>
+    <string name="add_collect_success">添加收藏成功</string>
+    <string name="add_collect_fail">添加收藏失败</string>
 </resources>

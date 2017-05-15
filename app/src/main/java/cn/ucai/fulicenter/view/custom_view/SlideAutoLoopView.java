@@ -1,4 +1,4 @@
-package cn.ucai.fulicenter.view;
+package cn.ucai.fulicenter.view.custom_view;
 
 import android.content.Context;
 import android.os.Handler;
@@ -106,7 +106,6 @@ public class SlideAutoLoopView extends ViewPager {
                     }else{//设置为下一个item
                         //取出当前item的下标
                         int currentItem = SlideAutoLoopView.this.getCurrentItem();
-                        Log.i("main", "currentItem:" + currentItem);
                         currentItem++;//递增
                         //设置当前item为下一个
                         SlideAutoLoopView.this.setCurrentItem(currentItem);

@@ -1,10 +1,10 @@
 package cn.ucai.fulicenter.view.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,8 +21,10 @@ import cn.ucai.fulicenter.model.net.IModelGoods;
 import cn.ucai.fulicenter.model.net.ModelGoods;
 import cn.ucai.fulicenter.model.net.OnCompleteListener;
 import cn.ucai.fulicenter.model.utils.ResultUtils;
-import cn.ucai.fulicenter.view.CatChildFilterButton;
+import cn.ucai.fulicenter.view.custom_view.CatChildFilterButton;
 import cn.ucai.fulicenter.view.adapter.NewGoodsAdapter;
+
+import static cn.ucai.fulicenter.application.FuLiCenterApplication.DATABASE;
 
 public class CategoryGoodsDetailActivity extends AppCompatActivity {
     int CategoryId;
@@ -53,6 +55,7 @@ public class CategoryGoodsDetailActivity extends AppCompatActivity {
     boolean addTimeAsc = false;
 
     String mGroupName;
+
     ArrayList<CategoryChildBean> arrayList;
     int sortBy;
 
@@ -68,8 +71,14 @@ public class CategoryGoodsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category_goods_detail);
         ButterKnife.bind(this);
         CategoryId = getIntent().getIntExtra("CategoryGoodsDetailId", 0);
-        mGroupName = getIntent().getStringExtra("CategoryGroupName");
-        arrayList = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra("CategoryChildList");
+//        mGroupName = getIntent().getStringExtra("CategoryGroupName");
+        SharedPreferences sp = getSharedPreferences(DATABASE, MODE_PRIVATE);
+        mGroupName = sp.getString("CategoryGroupName", "");
+        if (mGroupName != null) {
+            arrayList = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra("CategoryChildList");
+            catchildFilterButton.setText(mGroupName);
+            catchildFilterButton.setOnCatFilterClickListener(mGroupName,arrayList);
+        }
         initView();
         initData();
         setListener();
@@ -143,8 +152,7 @@ public class CategoryGoodsDetailActivity extends AppCompatActivity {
         mAdapter = new NewGoodsAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
         model = new ModelGoods();
-        catchildFilterButton.setText(mGroupName);
-        catchildFilterButton.setOnCatFilterClickListener(mGroupName,arrayList);
+
     }
 
 
@@ -178,5 +186,11 @@ public class CategoryGoodsDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        catchildFilterButton.release();
     }
 }

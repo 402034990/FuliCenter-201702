@@ -22,7 +22,10 @@
     <style name="AppTheme.TransparentActivity.FullScreen">
         <item name="android:windowFullscreen">true</item>
     </style>
-
+    <style name="style_popu_window">
+        <item name="android:windowEnterAnimation">@anim/enter_animation</item>
+        <item name="android:windowExitAnimation">@anim/exit_animation</item>
+    </style>
     <style name="TxtTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

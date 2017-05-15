@@ -91,14 +91,14 @@
                 android:textColor="#f00"
                 />
         </LinearLayout>
-        <cn.ucai.fulicenter.view.SlideAutoLoopView
+        <cn.ucai.fulicenter.view.custom_view.SlideAutoLoopView
             android:layout_marginTop="20dp"
             android:layout_width="240dp"
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:id="@+id/detail_salv"/>
 
-        <cn.ucai.fulicenter.view.FlowIndicator
+        <cn.ucai.fulicenter.view.custom_view.FlowIndicator
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

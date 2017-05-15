@@ -4,12 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.application.FuLiCenterApplication;
+import cn.ucai.fulicenter.model.bean.User;
+import cn.ucai.fulicenter.model.utils.SharePrefrenceUtils;
+import cn.ucai.fulicenter.model.utils.UserDao;
 
 /**
  * Created by Administrator on 2017/5/3 0003.
@@ -27,6 +32,27 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mTimer = new MyCountDownTimer(8000, 1000);
         mTimer.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (FuLiCenterApplication.getInstance().getUser() == null) {
+                    String username = SharePrefrenceUtils.getInstance().getUserName();
+                    if (username != null) {
+                        UserDao dao = new UserDao(SplashActivity.this);
+                        User user = dao.getUser(username);
+                        Log.i("main", "SplashActivity.user:" + user);
+                        if (user != null) {
+                            FuLiCenterApplication.getInstance().setUser(user);
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 
     @OnClick(R.id.skip)

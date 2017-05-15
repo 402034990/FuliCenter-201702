@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.model.bean.CategoryChildBean;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
 import cn.ucai.fulicenter.view.activity.CategoryGoodsDetailActivity;
+import cn.ucai.fulicenter.view.custom_view.CatChildFilterButton;
 
 /**
  * Created by Administrator on 2017/5/9 0009.
@@ -67,10 +68,13 @@ public class CatFilterAdapter extends BaseAdapter {
         holder.layoutCategoryChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, CategoryGoodsDetailActivity.class)
+                context.startActivity(new Intent(context,CategoryGoodsDetailActivity.class)
                 .putExtra("CategoryGoodsDetailId",child.getId())
-                .putExtra("CategoryGroupName",name)
                 .putExtra("CategoryChildList",Children));
+                if (CategoryGoodsDetailActivity.class.isInstance(context)) {
+                    CategoryGoodsDetailActivity activity = (CategoryGoodsDetailActivity) context;
+                    activity.finish();
+                }
             }
         });
         return layout;

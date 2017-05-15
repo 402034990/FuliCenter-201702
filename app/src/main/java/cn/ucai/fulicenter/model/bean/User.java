@@ -27,6 +27,19 @@ public class User {
     private int mavatarType;
     private String mavatarLastUpdateTime;
 
+    public User() {
+    }
+
+    public User(String muserName, String muserNick, int mavatarId, String mavatarPath, String mavatarSuffix, int mavatarType, String mavatarLastUpdateTime) {
+        this.muserName = muserName;
+        this.muserNick = muserNick;
+        this.mavatarId = mavatarId;
+        this.mavatarPath = mavatarPath;
+        this.mavatarSuffix = mavatarSuffix;
+        this.mavatarType = mavatarType;
+        this.mavatarLastUpdateTime = mavatarLastUpdateTime;
+    }
+
     public String getMuserName() {
         return muserName;
     }

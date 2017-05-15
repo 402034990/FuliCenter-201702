@@ -1,7 +1,10 @@
 package cn.ucai.fulicenter.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -14,10 +17,13 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.model.bean.CategoryChildBean;
 import cn.ucai.fulicenter.model.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.model.utils.ImageLoader;
 import cn.ucai.fulicenter.view.activity.CategoryGoodsDetailActivity;
+
+import static cn.ucai.fulicenter.application.FuLiCenterApplication.DATABASE;
 
 /**
  * Created by Administrator on 2017/5/8 0008.
@@ -27,6 +33,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     Context context;
     ArrayList<CategoryGroupBean> groupList;
     ArrayList<ArrayList<CategoryChildBean>> childList;
+
 
     public CategoryAdapter(Context context, ArrayList<CategoryGroupBean> groupList, ArrayList<ArrayList<CategoryChildBean>> childList) {
         this.context = context;
@@ -110,6 +117,10 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
                 .putExtra("CategoryGoodsDetailId",bean.getId())
                 .putExtra("CategoryGroupName",groupList.get(groupPosition).getName())
                 .putExtra("CategoryChildList",childList.get(groupPosition)));
+                SharedPreferences sp = context.getSharedPreferences(DATABASE, Activity.MODE_PRIVATE);
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putString("CategoryGroupName", groupList.get(groupPosition).getName());
+                edit.commit();
             }
         });
         return convertView;
@@ -150,4 +161,5 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
 }

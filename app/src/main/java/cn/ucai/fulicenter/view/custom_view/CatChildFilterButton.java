@@ -1,7 +1,6 @@
-package cn.ucai.fulicenter.view;
+package cn.ucai.fulicenter.view.custom_view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -10,19 +9,13 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.model.bean.CategoryChildBean;
 import cn.ucai.fulicenter.model.utils.Utils;
@@ -127,5 +120,11 @@ public class CatChildFilterButton extends Button {
     public static int getDrawableHeight(Context context, int resId) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resId);
         return bitmap.getHeight();
+    }
+
+    public  void release() {
+        if (mPopupWindow != null) {
+            mPopupWindow.dismiss();
+        }
     }
 }
