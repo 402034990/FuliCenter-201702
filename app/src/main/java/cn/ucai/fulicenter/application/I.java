@@ -61,6 +61,9 @@ public interface I {
     int ACTION_CART_ADD = 1;
     int ACTION_CART_DEL = 2;
     int ACTION_CART_UPDATA = 3;
+    int REQUEST_CODE_COLLECT = 105;
+    int ACTION_ADD_CART = 1;
+    int ACTION_DELETE_CART = -1;
 
     interface Goods {
         String KEY_RESULT = "result";

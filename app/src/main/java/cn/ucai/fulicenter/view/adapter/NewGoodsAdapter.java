@@ -43,9 +43,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    public String getFootText() {
-        return FootText;
-    }
 
     public void setFootText(String footText) {
         FootText = footText;

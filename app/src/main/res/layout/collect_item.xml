@@ -6,14 +6,13 @@
 
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         android:src="@drawable/nopic"
         android:id="@+id/mCollectIv"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/delete"
-        android:layout_marginTop="20dp"
         android:layout_alignParentRight="true"
         android:id="@+id/collect_delete"/>
     <TextView

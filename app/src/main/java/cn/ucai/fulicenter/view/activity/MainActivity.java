@@ -15,6 +15,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.view.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.view.fragment.CartFragment;
 import cn.ucai.fulicenter.view.fragment.CategoryFragment;
 import cn.ucai.fulicenter.view.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.view.fragment.PersonFragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mCategoryFragment;
     PersonFragment mPersonFragment;
+    CartFragment mCartFragment;
     Fragment[] fragments;
     //当前fragment的下标
     int currentIndex = 0;
@@ -73,11 +75,13 @@ public class MainActivity extends AppCompatActivity {
         mGoodsFragment = new NewGoodsFragment();
         mBoutiqueFragment = new BoutiqueFragment();
         mCategoryFragment = new CategoryFragment();
+        mCartFragment = new CartFragment();
         mPersonFragment = new PersonFragment();
         fragments = new Fragment[5];
         fragments[0] = mGoodsFragment;
         fragments[1] = mBoutiqueFragment;
         fragments[2] = mCategoryFragment;
+        fragments[3] = mCartFragment;
         fragments[4] = mPersonFragment;
     }
 
@@ -91,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.category:
                 Index = 2;
+                break;
+            case R.id.cart:
+                if (FuLiCenterApplication.getInstance().getUser() == null) {
+                    startActivityForResult(new Intent(this, LoginActivity.class), I.REQUEST_CODE_LOGIN_FROM_CART);
+                } else {
+                    Index = 3;
+                }
                 break;
             case R.id.contact:
                 if (FuLiCenterApplication.getInstance().getUser() == null) {
@@ -125,8 +136,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_LOGIN) {
-            Index = 4;
+        if (resultCode == RESULT_OK ) {
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                Index = 4;
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
+                Index = 3;
+            }
             showFragmentIndex();
         }
     }
@@ -134,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Index == 4 && FuLiCenterApplication.getInstance().getUser() == null) {
+        if ((Index == 4 || Index == 3)&& FuLiCenterApplication.getInstance().getUser() == null) {
             Index = 0;
             showFragmentIndex();
             setRadioButton();

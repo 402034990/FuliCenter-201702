@@ -56,4 +56,6 @@
     <string name="delete_collect_success">delete_collect_success</string>
     <string name="add_collect_success">add_collect_success</string>
     <string name="add_collect_fail">add_collect_fail</string>
+    <string name="add_cart_success">add_cart_success</string>
+    <string name="add_cart_fail">add_cart_fail</string>
 </resources>

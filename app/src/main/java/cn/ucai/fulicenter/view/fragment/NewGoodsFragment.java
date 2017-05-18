@@ -62,10 +62,10 @@ public class NewGoodsFragment extends Fragment {
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                final int lastposition = manager.findLastVisibleItemPosition();
+                final int lastPosition = manager.findLastVisibleItemPosition();
                 mAdapter.setDragging(newState == RecyclerView.SCROLL_STATE_DRAGGING);
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && mAdapter.isMore() && lastposition >= mAdapter.getItemCount() - 1) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mAdapter.isMore() && lastPosition >= mAdapter.getItemCount() - 1) {
                     PageId++;
                     /**
                      * 这里Footer居中有问题，未解决
@@ -73,10 +73,11 @@ public class NewGoodsFragment extends Fragment {
                     manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                         @Override
                         public int getSpanSize(int position) {
-                            return position == lastposition ? manager.getSpanCount() : 1;
+                            return position == mAdapter.getItemCount() - 1 ? manager.getSpanCount() : 1;
                         }
                     });
                     downloadNewGoods(PageId, action);
+
                 }
             }
         });
@@ -132,6 +133,14 @@ public class NewGoodsFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (pd != null) {
+            pd.dismiss();
+        }
+    }
+
     private void initView(View layout) {
         mLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swip);
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.recyclerview);
@@ -143,7 +152,7 @@ public class NewGoodsFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         pd = new ProgressDialog(getContext());
-        pd.setTitle(R.string.load_more);
+        pd.setMessage(getString(R.string.load_more));
         pd.show();
     }
 

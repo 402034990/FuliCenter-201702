@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 
+import cn.ucai.fulicenter.model.bean.CartBean;
 import cn.ucai.fulicenter.model.bean.CollectBean;
 import cn.ucai.fulicenter.model.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.model.bean.MessageBean;
@@ -22,13 +23,13 @@ public interface IUserModel {
 
     void updateAvatar(Context context, String hxIdName, File mFile, OnCompleteListener<String> listener);
 
-    void findCarts(Context context, String userName, OnCompleteListener<GoodsDetailsBean[]> listener);
+    void findCarts(Context context, String userName, OnCompleteListener<CartBean[]> listener);
 
-    void addCarts(Context context, int goods_id, String userName, int count, int isChecked, OnCompleteListener<MessageBean> listener);
+    void addCarts(Context context, int goods_id, String userName, int count, boolean isChecked, OnCompleteListener<MessageBean> listener);
 
     void deleteCart(Context context, int id, OnCompleteListener<MessageBean> listener);
 
-    void updateCart(Context context, int id, int count, int isChecked, OnCompleteListener<MessageBean> listener);
+    void updateCart(Context context, int id, int count, boolean isChecked, OnCompleteListener<MessageBean> listener);
 
     void findCollects(Context context,String userName, int pageId, int pageSize, OnCompleteListener<CollectBean[]> listener);
 

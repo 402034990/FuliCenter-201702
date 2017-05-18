@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.File;
 
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.model.bean.CartBean;
 import cn.ucai.fulicenter.model.bean.CollectBean;
 import cn.ucai.fulicenter.model.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.model.bean.MessageBean;
@@ -62,22 +63,22 @@ public class UserModel implements IUserModel{
     }
 
     @Override
-    public void findCarts(Context context, String userName, OnCompleteListener<GoodsDetailsBean[]> listener) {
-        OkHttpUtils<GoodsDetailsBean[]> utils = new OkHttpUtils<>(context);
+    public void findCarts(Context context, String userName, OnCompleteListener<CartBean[]> listener) {
+        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_CARTS)
                 .addParam(I.Cart.USER_NAME,userName)
-                .targetClass(GoodsDetailsBean[].class)
+                .targetClass(CartBean[].class)
                 .execute(listener);
     }
 
     @Override
-    public void addCarts(Context context, int goods_id, String userName, int count, int isChecked, OnCompleteListener<MessageBean> listener) {
+    public void addCarts(Context context, int goods_id, String userName, int count, boolean isChecked, OnCompleteListener<MessageBean> listener) {
         OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_ADD_CART)
                 .addParam(I.Goods.KEY_GOODS_ID,goods_id+"")
                 .addParam(I.Cart.USER_NAME,userName)
                 .addParam(I.Cart.COUNT,count+"")
-                .addParam(I.Cart.IS_CHECKED,isChecked+"")
+                .addParam(I.Cart.IS_CHECKED,String.valueOf(isChecked))
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }
@@ -92,7 +93,7 @@ public class UserModel implements IUserModel{
     }
 
     @Override
-    public void updateCart(Context context, int id, int count, int isChecked, OnCompleteListener<MessageBean> listener) {
+    public void updateCart(Context context, int id, int count, boolean isChecked, OnCompleteListener<MessageBean> listener) {
         OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_UPDATE_CART)
                 .addParam(I.Cart.ID,String.valueOf(id))

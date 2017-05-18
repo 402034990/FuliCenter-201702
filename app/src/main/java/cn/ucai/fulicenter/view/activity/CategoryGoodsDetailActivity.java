@@ -71,7 +71,6 @@ public class CategoryGoodsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category_goods_detail);
         ButterKnife.bind(this);
         CategoryId = getIntent().getIntExtra("CategoryGoodsDetailId", 0);
-//        mGroupName = getIntent().getStringExtra("CategoryGroupName");
         SharedPreferences sp = getSharedPreferences(DATABASE, MODE_PRIVATE);
         mGroupName = sp.getString("CategoryGroupName", "");
         if (mGroupName != null) {

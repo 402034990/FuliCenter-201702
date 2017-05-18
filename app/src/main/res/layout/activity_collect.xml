@@ -4,37 +4,50 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/btn_white_normal"
-        android:id="@+id/relative">
+        android:background="@color/btn_white_normal">
 
         <ImageView
             android:id="@+id/mCollectIv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/back"
-            android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:src="@drawable/back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:background="@null"
             android:text="收藏的宝贝"
-            android:layout_centerInParent="true"
-            android:textColor="#000"/>
+            android:textColor="#000" />
     </RelativeLayout>
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/Collect_swip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relative"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
-        <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/collect_recyclerview"/>
-    </LinearLayout>
-
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="刷新中....."
+                android:gravity="center_horizontal"
+                android:textSize="25sp"
+                android:visibility="gone"
+                android:id="@+id/collect_hint"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/collect_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
