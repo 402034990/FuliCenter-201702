@@ -81,7 +81,11 @@ public class CollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (position == getItemCount() - 1) {
             FooterViewHolder footer = (FooterViewHolder) holder;
-            footer.mtv_footer.setText(FootText);
+            if (getItemCount() < I.PAGE_SIZE_DEFAULT) {
+                footer.mtv_footer.setVisibility(View.GONE);
+            } else {
+                footer.mtv_footer.setText(FootText);
+            }
             return;
         }
         CollectViewHolder collect = (CollectViewHolder) holder;
@@ -143,10 +147,6 @@ public class CollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
-    public void addArrayList(ArrayList<CollectBean> mArrayList) {
-        list.addAll(mArrayList);
-        notifyDataSetChanged();
-    }
 
     static class CollectViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.mCollectIv)

@@ -3,12 +3,12 @@ package cn.ucai.fulicenter.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         final GoodsDetailsBean goods = cartBean.getGoods();
         holder.cartCheck.setOnCheckedChangeListener(null);
         if (goods != null) {
-            ImageLoader.downloadImg(context,holder.cartIv,goods.getGoodsThumb());
+            ImageLoader.downloadImg(context, holder.cartIv, goods.getGoodsThumb());
             holder.cartName.setText(goods.getGoodsName());
             holder.priceCart.setText(goods.getCurrencyPrice());
             holder.countCart.setText(String.valueOf(cartBean.getCount()));
@@ -64,8 +64,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             holder.cartIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)context).startActivityForResult(new Intent(context, GoodsDetailActivity.class)
-                            .putExtra("GoodsId",cartBean.getGoodsId()),0);
+                    ((MainActivity) context).startActivityForResult(new Intent(context, GoodsDetailActivity.class)
+                            .putExtra("GoodsId", cartBean.getGoodsId()), 0);
                 }
             });
             holder.addCart.setOnClickListener(listener);
@@ -80,7 +80,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public int getItemCount() {
-        return list==null?0:list.size();
+        return list == null ? 0 : list.size();
     }
 
     public void initArrayList(ArrayList<CartBean> mArrayList) {
@@ -105,10 +105,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         ImageView delCart;
         @BindView(R.id.priceCart)
         TextView priceCart;
-
         CartViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
+
 }
